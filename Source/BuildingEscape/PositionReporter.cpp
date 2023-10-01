@@ -2,6 +2,8 @@
 
 
 #include "PositionReporter.h"
+#include "BuildingEscape.h"
+#include "GameFramework/Actor.h"
 
 // Sets default values for this component's properties
 UPositionReporter::UPositionReporter()
