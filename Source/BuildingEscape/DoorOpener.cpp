@@ -20,6 +20,26 @@ void UDoorOpener::BeginPlay()
 {
 	Super::BeginPlay();
 
+	ActorThatOpens = GetWorld()->GetFirstPlayerController()->GetPawn();
+
+	FString ObjectName = GetOwner()->GetName();
+
+	if (ActorThatOpens == NULL)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("ActorThatOpens is NULL on %s"), *ObjectName);
+	}
+	
+	if (PressurePlate == NULL)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("PressurePlate is NULL on %s"), *ObjectName);
+	}
+
+	// ...
+	
+}
+
+void UDoorOpener::OpenDoor()
+{
 	// Find the owning Actor
 	AActor* Owner = GetOwner();
 
@@ -28,9 +48,6 @@ void UDoorOpener::BeginPlay()
 
 	// Set the door rotation
 	Owner->SetActorRotation(NewRotation);
-
-	// ...
-	
 }
 
 
@@ -39,6 +56,13 @@ void UDoorOpener::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	// Pool the Trigger Volume
+	if (ActorThatOpens != NULL 
+	&& PressurePlate != NULL 
+	&& PressurePlate->IsOverlappingActor(ActorThatOpens))
+	{
+		// If the ActorThatOpens is in the volume
+		OpenDoor();
+	}
 }
 
