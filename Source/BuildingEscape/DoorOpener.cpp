@@ -24,13 +24,6 @@ void UDoorOpener::BeginPlay()
 
 	Owner = GetOwner();
 
-	FString ObjectName = GetOwner()->GetName();
-	
-	if (PressurePlate == NULL)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("PressurePlate is NULL on %s"), *ObjectName);
-	}
-
 	// ...
 	
 }
@@ -52,9 +45,8 @@ void UDoorOpener::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// Pool the Trigger Volume
-	if (PressurePlate != NULL 
-	&& GetTotalMassOfActorsOnPlate() > 50.f // TODO make into a parameter
-		)
+	if (GetTotalMassOfActorsOnPlate() > 50.f) // TODO make into a parameter
+	
 	{
 		// If the ActorThatOpens is in the volume
 		OpenDoor();
@@ -74,6 +66,7 @@ float UDoorOpener::GetTotalMassOfActorsOnPlate()
 
 	// Find all the overlapping actors
 	TArray<AActor*> OverlappingActors;
+	if (!PressurePlate) { return TotalMass; }
 	PressurePlate->GetOverlappingActors(OUT OverlappingActors);
 
 	// Iterate through them adding their masses
