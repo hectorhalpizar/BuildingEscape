@@ -39,6 +39,7 @@ void UDoorOpener::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 	{
 		// If the ActorThatOpens is in the volume
 		OnOpen.Broadcast();
+		UE_LOG(LogTemp, Warning, TEXT("Open Door"))
 	}
 	else
 	{
@@ -59,7 +60,7 @@ float UDoorOpener::GetTotalMassOfActorsOnPlate()
 	for (const auto& Actor : OverlappingActors)
 	{
 		TotalMass += Actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
-		UE_LOG(LogTemp, Warning, TEXT("%s on pressure plate"), *Actor->GetName())
+		// UE_LOG(LogTemp, Warning, TEXT("%s on pressure plate"), *Actor->GetName())
 	}
 
 	return TotalMass;
