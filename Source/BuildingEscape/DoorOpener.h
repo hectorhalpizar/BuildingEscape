@@ -12,6 +12,7 @@
 #include "Components/ActorComponent.h"
 #include "DoorOpener.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnOpenRequest);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BUILDINGESCAPE_API UDoorOpener : public UActorComponent
@@ -50,4 +51,7 @@ private:
 
 	// Returns total mass in kg
 	float GetTotalMassOfActorsOnPlate();
+
+	UPROPERTY(BlueprintAssignable)
+	FOnOpenRequest OnOpenRequest;
 };
